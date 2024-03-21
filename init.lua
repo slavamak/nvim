@@ -12,6 +12,7 @@ vim.opt.smoothscroll = true
 vim.opt.spell = true
 vim.opt.spelllang = 'ru_ru,en_us' vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.statusline = '%f %m %= %Y %p%% %l:%c  '
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
 vim.opt.undodir = os.getenv 'HOME' .. '/.cache/nvim/undodir'
