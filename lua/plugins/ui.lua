@@ -8,6 +8,11 @@ return {
       statementStyle = { bold = false },
       overrides = function(colors)
         return {
+          GitSignsAdd = { bg = 'none' },
+          GitSignsChange = { bg = 'none' },
+          GitSignsDelete = { bg = 'none' },
+          LineNr = { bg = 'none' },
+          SignColumn = { bg = 'none' },
           StatusLine = { fg = colors.theme.ui.special, bg = 'none' },
           StatusLineNC = { bg = 'none' },
         }
