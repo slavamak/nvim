@@ -1,5 +1,4 @@
 local util = require 'util'
-local colorscheme = require 'modules.colorscheme'
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -24,12 +23,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
   group = util.augroup 'lsp_border',
   pattern = { 'lspinfo', 'lsp-installer' },
-})
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = colorscheme.set_highlights,
-  group = util.augroup 'update_highlight_groups',
-  pattern = 'default',
 })
 
 vim.api.nvim_create_autocmd('FileType', {

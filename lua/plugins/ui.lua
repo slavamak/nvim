@@ -1,5 +1,38 @@
 return {
   {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    opts = {
+      commentStyle = { italic = false },
+      keywordStyle = { italic = false },
+      statementStyle = { bold = false },
+      overrides = function(colors)
+        return {
+          StatusLine = { fg = colors.theme.ui.special, bg = 'none' },
+          StatusLineNC = { bg = 'none' },
+        }
+      end,
+    },
+  },
+
+  {
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    opts = {
+      groups = {
+        all = {
+          Delimiter = { link = '@punctuation.delimiter' },
+          StatusLine = { fg = 'fg3', bg = 'none' },
+          StatusLineNC = { fg = 'palette.fg.muted', bg = 'none' },
+        },
+      },
+    },
+    config = function(_, opts)
+      require('github-theme').setup(opts)
+    end,
+  },
+
+  {
     'nvim-lualine/lualine.nvim',
     event = { 'BufReadPost', 'BufNewFile', 'InsertEnter' },
     dependencies = {
@@ -12,10 +45,9 @@ return {
         globalstatus = true,
         disabled_filetypes = { 'alpha' },
         theme = function()
-          local colorscheme = require 'modules.colorscheme'
-          local palette = colorscheme.current_palette()
-          local normal = { fg = palette.subtle, bg = palette.none }
-          local inactive = { fg = palette.muted, bg = palette.none }
+          local utils = require 'lualine.utils.utils'
+          local normal = utils.extract_highlight_colors 'StatusLine'
+          local inactive = utils.extract_highlight_colors 'StatusLineNC'
 
           return {
             normal = {
@@ -138,10 +170,10 @@ return {
 
       lualine_setup()
 
-      vim.api.nvim_create_autocmd('ColorScheme', {
+      vim.api.nvim_create_autocmd('OptionSet', {
         callback = lualine_setup,
         group = util.augroup 'update_lualine_theme',
-        pattern = 'default',
+        pattern = 'background',
       })
     end,
   },
@@ -170,14 +202,15 @@ return {
   {
     'f-person/auto-dark-mode.nvim',
     lazy = false,
+    priority = 1000,
     opts = {
       set_dark_mode = function()
+        vim.cmd 'colorscheme kanagawa-wave'
         vim.api.nvim_set_option_value('background', 'dark', {})
-        vim.cmd 'colorscheme default'
       end,
       set_light_mode = function()
+        vim.cmd 'colorscheme github_light_default'
         vim.api.nvim_set_option_value('background', 'light', {})
-        vim.cmd 'colorscheme default'
       end,
       update_interval = 1000,
     },

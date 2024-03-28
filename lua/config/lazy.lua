@@ -18,6 +18,7 @@ require('lazy').setup('plugins', {
   defaults = {
     lazy = true,
   },
+  install = { colorscheme = { 'kanagawa-wave', 'github_light_default' } },
   ui = {
     border = vim.g.border_chars,
   },
