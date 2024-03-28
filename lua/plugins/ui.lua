@@ -47,8 +47,7 @@ return {
       options = {
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
-        globalstatus = true,
-        disabled_filetypes = { 'alpha' },
+        disabled_filetypes = { 'alpha', 'neo-tree' },
         theme = function()
           local utils = require 'lualine.utils.utils'
           local normal = utils.extract_highlight_colors 'StatusLine'
