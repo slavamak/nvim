@@ -8,7 +8,7 @@ vim.opt.list = true
 vim.opt.listchars = { space = '·', tab = '▸ ' }
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 vim.opt.sidescrolloff = 8
 vim.opt.smartindent = true
 vim.opt.smoothscroll = true
@@ -37,3 +37,195 @@ vim.keymap.set('n', 'о', 'gj', { desc = 'Move cursor down' })
 vim.keymap.set('n', 'р', 'h', { desc = 'Move cursor left' })
 vim.keymap.set('n', 'д', 'l', { desc = 'Move cursor right' })
 vim.keymap.set('n', '<Leader>p', '<Cmd>Ex<Cr>', { desc = 'Open Netrw' })
+
+vim.keymap.set('n', '<Leader>u', '<Cmd>UndotreeToggle<Cr>', { desc = 'Undotree toggle' })
+vim.keymap.set('n', '<Leader>f', '<Cmd>Telescope find_files<Cr>', { desc = 'Find files' })
+vim.keymap.set('n', '<Leader>s', '<Cmd>Telescope live_grep<Cr>', { desc = 'Grep search' })
+vim.keymap.set('n', '<Leader>b', '<Cmd>Telescope buffers<Cr>', { desc = 'Buffers' })
+vim.keymap.set('n', '<Leader>h', '<Cmd>Telescope help_tags<Cr>', { desc = 'Help' })
+vim.keymap.set('n', '<Leader>o', '<Cmd>Telescope oldfiles<Cr>', { desc = 'Recently opened' })
+vim.keymap.set('n', '-', '<Cmd>Oil<Cr>', { desc = 'File explorer' })
+vim.keymap.set('n', '_', '<Cmd>Oil --float<Cr>', { desc = 'File explorer in float window' })
+vim.keymap.set('n', '<Leader>G', '<Cmd>Git<Cr>', { desc = 'Open git summary window' })
+vim.keymap.set('n', '<Leader>gp', '<Cmd>Git push<Cr>', { desc = 'Git push' })
+vim.keymap.set('n', '<Leader>]h', '<Cmd>Gitsigns next_hunk<Cr>', { desc = 'Gitsigns next hunk' })
+vim.keymap.set('n', '<Leader>[h', '<Cmd>Gitsigns prev_hunk<Cr>', { desc = 'Gitsigns prev hunk' })
+vim.keymap.set('n', '<Leader>hs', '<Cmd>Gitsigns stage_hunk<Cr>', { desc = 'Gitsigns stage hunk' })
+vim.keymap.set('n', '<Leader>hr', '<Cmd>Gitsigns reset_hunk<Cr>', { desc = 'Gitsigns reset hunk' })
+vim.keymap.set('n', '<Leader>hS', '<Cmd>Gitsigns stage_buffer<Cr>', { desc = 'Gitsigns stage buffer' })
+vim.keymap.set('n', '<Leader>hR', '<Cmd>Gitsigns reset_buffer<Cr>', { desc = 'Gitsigns reset buffer' })
+vim.keymap.set('n', '<Leader>hp', '<Cmd>Gitsigns preview_hunk_inline<Cr>', { desc = 'Gitsigns preview hunk inline' })
+vim.keymap.set('n', '<Leader>hP', '<Cmd>Gitsigns preview_hunk<Cr>', { desc = 'Gitsigns preview hunk' })
+
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable',
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+local plugins = {
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    opts = {
+      commentStyle = { italic = false },
+      keywordStyle = { italic = false },
+      statementStyle = { bold = false },
+      overrides = function(colors)
+        return {
+          GitSignsAdd = { bg = 'none' },
+          GitSignsChange = { bg = 'none' },
+          GitSignsDelete = { bg = 'none' },
+          LineNr = { bg = 'none' },
+          SignColumn = { bg = 'none' },
+          StatusLine = { fg = colors.theme.ui.special, bg = 'none' },
+          StatusLineNC = { bg = 'none' },
+        }
+      end,
+    },
+  },
+
+  {
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    opts = {
+      groups = {
+        all = {
+          Delimiter = { link = '@punctuation.delimiter' },
+          StatusLine = { fg = 'fg3', bg = 'none' },
+          StatusLineNC = { fg = 'palette.fg.muted', bg = 'none' },
+        },
+      },
+    },
+    config = function(_, opts)
+      require('github-theme').setup(opts)
+    end,
+  },
+
+  {
+    'f-person/auto-dark-mode.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      set_dark_mode = function()
+        vim.cmd 'colorscheme kanagawa-wave'
+        vim.api.nvim_set_option_value('background', 'dark', {})
+      end,
+      set_light_mode = function()
+        vim.cmd 'colorscheme github_light_default'
+        vim.api.nvim_set_option_value('background', 'light', {})
+      end,
+      update_interval = 1000,
+    },
+  },
+
+  {
+    'mbbill/undotree',
+    cmd = 'UndotreeToggle',
+    config = function()
+      vim.g.undotree_SetFocusWhenToggle = 1
+    end,
+  },
+
+  {
+    'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  {
+    'stevearc/oil.nvim',
+    cmd = 'Oil',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      delete_to_trash = true,
+    },
+    config = function(_, opts)
+      require('oil').setup(opts)
+    end
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    cmd = 'TSUpdate',
+    event = { 'BufReadPost', 'BufNewFile' },
+    opts = {
+      auto_install = true,
+      ensure_installed = {
+        'astro',
+        'bash',
+        'css',
+        'dockerfile',
+        'git_config',
+        'git_rebase',
+        'gitattributes',
+        'gitcommit',
+        'gitignore',
+        'go',
+        'graphql',
+        'html',
+        'ini',
+        'javascript',
+        'jsdoc',
+        'json',
+        'json5',
+        'jsonc',
+        'liquid',
+        'lua',
+        'luadoc',
+        'make',
+        'python',
+        'ruby',
+        'ssh_config',
+        'tmux',
+        'toml',
+        'typescript',
+        'tsx',
+        'vue',
+        'yaml',
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+    end,
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = true,
+  },
+
+    {
+    'tpope/vim-fugitive',
+    cmd = { 'G', 'Git', 'Gfetch', 'Gpush', 'Gclog', 'Gdiffsplit' },
+  },
+
+  {
+    'lewis6991/gitsigns.nvim',
+    event = 'BufReadPre',
+    config = true,
+  },
+}
+
+local opts = {
+  defaults = {
+    lazy = true,
+  },
+  install = {
+    missing = true,
+    colorscheme = { 'kanagawa-wave', 'github_light_default' },
+  },
+}
+
+require('lazy').setup(plugins, opts)
