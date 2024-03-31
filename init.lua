@@ -40,7 +40,9 @@ vim.keymap.set('n', '<Leader>p', '<Cmd>Ex<Cr>', { desc = 'Open Netrw' })
 
 vim.keymap.set('n', '<Leader>u', '<Cmd>UndotreeToggle<Cr>', { desc = 'Undotree toggle' })
 vim.keymap.set('n', '<Leader>f', '<Cmd>Telescope find_files<Cr>', { desc = 'Find files' })
-vim.keymap.set('n', '<Leader>s', '<Cmd>Telescope live_grep<Cr>', { desc = 'Grep search' })
+vim.keymap.set('n', '<Leader>s', '<Cmd>Telescope live_grep<Cr>', { desc = 'Search for a string' })
+vim.keymap.set('n', '<Leader>S', '<Cmd>Telescope grep_string<Cr>', { desc = 'Search for a string under the cursor' })
+vim.keymap.set('n', '<Leader>g', '<Cmd>Telescope git_files<Cr>', { desc = 'Git files' })
 vim.keymap.set('n', '<Leader>b', '<Cmd>Telescope buffers<Cr>', { desc = 'Buffers' })
 vim.keymap.set('n', '<Leader>h', '<Cmd>Telescope help_tags<Cr>', { desc = 'Help' })
 vim.keymap.set('n', '<Leader>o', '<Cmd>Telescope oldfiles<Cr>', { desc = 'Recently opened' })
@@ -137,7 +139,36 @@ local plugins = {
   {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'nvim-telescope/telescope-ui-select.nvim',
+    },
+    config = function()
+      local telescope = require 'telescope'
+      local telescope_config = require 'telescope.config'
+      local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
+
+      table.insert(vimgrep_arguments, '--hidden')
+      table.insert(vimgrep_arguments, '--glob')
+      table.insert(vimgrep_arguments, '!**/.git/*')
+
+      telescope.setup {
+        defaults = {
+          vimgrep_arguments = vimgrep_arguments
+        },
+        pickers = {
+          find_files = {
+            hidden = true
+          },
+          git_files = {
+            show_untracked = true
+          },
+        },
+      }
+
+      telescope.load_extension 'ui-select'
+    end
   },
 
   {
