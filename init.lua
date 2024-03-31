@@ -176,6 +176,7 @@ local plugins = {
     cmd = 'Oil',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
+      default_file_explorer = false,
       delete_to_trash = true,
     },
     config = function(_, opts)
