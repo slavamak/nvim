@@ -40,6 +40,7 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
+    lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
@@ -57,6 +58,11 @@ return {
       telescope.setup {
         defaults = {
           vimgrep_arguments = vimgrep_arguments
+        },
+        extensions = {
+          ["ui-select"] = {
+            require('telescope.themes').get_dropdown {}
+          }
         },
         pickers = {
           find_files = {
