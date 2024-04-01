@@ -66,7 +66,7 @@ return {
         },
         pickers = {
           find_files = {
-            hidden = true
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
           },
           git_files = {
             show_untracked = true
