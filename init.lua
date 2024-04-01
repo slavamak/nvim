@@ -6,6 +6,7 @@ vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.list = true
 vim.opt.listchars = { space = '·', tab = '▸ ' }
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.shiftwidth = 2
