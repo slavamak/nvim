@@ -24,4 +24,7 @@ require('lazy').setup('plugins', {
     missing = true,
     colorscheme = { 'kanagawa-wave', 'github_light_default' },
   },
+  ui = {
+    border = vim.g.border_chars,
+  },
 })

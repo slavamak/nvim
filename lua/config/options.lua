@@ -2,6 +2,7 @@ vim.g.mapleader = ' '
 vim.g.netrw_browse_split = 0
 vim.g.netrw_preview = 1
 vim.g.netrw_alto = 0
+vim.g.border_chars = 'rounded'
 vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.list = true
