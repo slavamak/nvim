@@ -5,6 +5,7 @@ vim.g.netrw_alto = 0
 vim.g.border_chars = 'rounded'
 vim.opt.cursorline = true
 vim.opt.ignorecase = true
+vim.opt.inccommand = 'split'
 vim.opt.list = true
 vim.opt.listchars = { space = '·', tab = '▸ ' }
 vim.opt.number = true
@@ -23,3 +24,11 @@ vim.opt.undodir = os.getenv 'HOME' .. '/.cache/nvim/undodir'
 vim.opt.undofile = true
 vim.opt.updatetime = 300
 vim.opt.wrap = false
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
