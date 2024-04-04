@@ -90,4 +90,9 @@ return {
       require('oil').setup(opts)
     end
   },
+
+  {
+    'j-hui/fidget.nvim',
+    config = true
+  }
 }

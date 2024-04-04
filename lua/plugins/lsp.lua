@@ -56,6 +56,7 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'b0o/schemastore.nvim',
       'stevearc/conform.nvim',
+      'j-hui/fidget.nvim',
     },
     opts = {
       servers = {
