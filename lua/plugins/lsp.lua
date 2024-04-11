@@ -71,6 +71,7 @@ return {
             client.server_capabilities.documentRangeFormattingProvider = true
           end,
         },
+        denols = {},
         emmet_language_server = {},
         eslint = {},
         html = {},
@@ -123,7 +124,13 @@ return {
               or util.find_git_ancestor(fname)
           end,
         },
-        tsserver = {},
+        tsserver = {
+          on_new_config = function(new_config, root_dir)
+            local util = require 'lspconfig.util'
+            local deno_config_exists = util.root_pattern('deno.json', 'deno.jsonc')
+            if deno_config_exists(root_dir) then new_config.enabled = false end
+          end,
+        },
         yamlls = {
           on_attach = function(client)
             client.server_capabilities.documentFormattingProvider = true
