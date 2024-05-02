@@ -13,9 +13,10 @@ return {
         typescriptreact = { { 'prettierd_js', 'eslint_d' } },
         liquid = { 'prettierd' },
         lua = { 'stylua' },
-        sh = { 'shfmt' },
         bash = { 'shfmt' },
+        sh = { 'shfmt' },
         zsh = { 'shfmt' },
+        yaml = { 'prettierd' },
       },
       formatters = {
         shfmt = {
