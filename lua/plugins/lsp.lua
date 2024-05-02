@@ -58,8 +58,45 @@ return {
       'stevearc/conform.nvim',
       'j-hui/fidget.nvim',
     },
-    opts = {
-      servers = {
+    config = function()
+      local lsp_zero = require 'lsp-zero'
+      lsp_zero.extend_lspconfig()
+
+      lsp_zero.on_attach(function(_, bufnr)
+        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action', buffer = bufnr })
+        if vim.lsp.buf.range_code_action then
+          vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.range_code_action, { desc = 'LSP code action', buffer = bufnr })
+        else
+          vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action', buffer = bufnr })
+        end
+
+        vim.keymap.set({ 'n', 'x' }, '<Leader>f', function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end, { desc = 'LSP format document', buffer = bufnr })
+
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP display hover information', buffer = bufnr })
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP display signature information', buffer = bufnr })
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { desc = 'LSP rename all references', buffer = bufnr })
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP jump to the definition', buffer = bufnr })
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP jump to the declaration', buffer = bufnr })
+        vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, { desc = 'LSP jump to the definition of the type', buffer = bufnr })
+        vim.keymap.set('n', 'gi', '<Cmd>Telescope lsp_implementations<Cr>', { desc = 'LSP lists all the implementations', buffer = bufnr })
+        vim.keymap.set('n', 'gr', '<Cmd>Telescope lsp_references<Cr>', { desc = 'LSP lists all the references', buffer = bufnr })
+      end)
+
+      vim.keymap.set('n', '<Leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic quickfix list' })
+      vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, { desc = 'Open float diagnostic' })
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
+
+      local handlers = { lsp_zero.default_setup }
+      local ensure_installed = {}
+
+      local schemastore = require('schemastore')
+      local util = require 'lspconfig.util'
+      local deno_config_exists = util.root_pattern('deno.json', 'deno.jsonc')
+
+      local servers = {
         ansiblels = {},
         astro = {},
         bashls = {
@@ -72,10 +109,7 @@ return {
           end,
         },
         denols = {
-          root_dir = function(fname)
-            local util = require 'lspconfig.util'
-            return util.root_pattern('deno.json', 'deno.jsonc')(fname)
-          end,
+          root_dir = deno_config_exists
         },
         emmet_language_server = {},
         eslint = {},
@@ -83,7 +117,7 @@ return {
         jsonls = {
           on_new_config = function(new_config)
             new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-            vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
+            vim.list_extend(new_config.settings.json.schemas, schemastore.json.schemas())
           end,
           settings = {
             json = {
@@ -121,8 +155,6 @@ return {
         taplo = {},
         theme_check = {
           root_dir = function(fname)
-            local util = require 'lspconfig.util'
-
             return util.root_pattern('.theme-check.yml', '.theme-check.yaml')(fname)
               or util.find_package_json_ancestor(fname)
               or util.find_node_modules_ancestor(fname)
@@ -131,8 +163,6 @@ return {
         },
         tsserver = {
           on_new_config = function(new_config, root_dir)
-            local util = require 'lspconfig.util'
-            local deno_config_exists = util.root_pattern('deno.json', 'deno.jsonc')
             if deno_config_exists(root_dir) then new_config.enabled = false end
           end,
         },
@@ -143,7 +173,7 @@ return {
           end,
           on_new_config = function(new_config)
             new_config.settings.yaml.schemas = new_config.settings.yaml.schemas or {}
-            vim.list_extend(new_config.settings.yaml.schemas, require('schemastore').yaml.schemas())
+            vim.list_extend(new_config.settings.yaml.schemas, schemastore.yaml.schemas())
           end,
           filetypes = {
             'yaml',
@@ -161,43 +191,9 @@ return {
             },
           },
         },
-      },
-    },
-    config = function(_, opts)
-      local lsp_zero = require 'lsp-zero'
-      lsp_zero.extend_lspconfig()
+      }
 
-      lsp_zero.on_attach(function(client, bufnr)
-        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action', buffer = bufnr })
-        if vim.lsp.buf.range_code_action then
-          vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.range_code_action, { desc = 'LSP code action', buffer = bufnr })
-        else
-          vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action', buffer = bufnr })
-        end
-
-        vim.keymap.set({ 'n', 'x' }, '<Leader>f', function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end, { desc = 'LSP format document', buffer = bufnr })
-
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP display hover information', buffer = bufnr })
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP display signature information', buffer = bufnr })
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { desc = 'LSP rename all references', buffer = bufnr })
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP jump to the definition', buffer = bufnr })
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP jump to the declaration', buffer = bufnr })
-        vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, { desc = 'LSP jump to the definition of the type', buffer = bufnr })
-        vim.keymap.set('n', 'gi', '<Cmd>Telescope lsp_implementations<Cr>', { desc = 'LSP lists all the implementations', buffer = bufnr })
-        vim.keymap.set('n', 'gr', '<Cmd>Telescope lsp_references<Cr>', { desc = 'LSP lists all the references', buffer = bufnr })
-      end)
-
-      vim.keymap.set('n', '<Leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic quickfix list' })
-      vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, { desc = 'Open float diagnostic' })
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-
-      local handlers = { lsp_zero.default_setup }
-      local ensure_installed = {}
-
-      for server, server_opts in pairs(opts.servers) do
+      for server, server_opts in pairs(servers) do
         server_opts = server_opts == true and {} or server_opts
         if server_opts then lsp_zero.configure(server, server_opts) end
         table.insert(ensure_installed, server)
