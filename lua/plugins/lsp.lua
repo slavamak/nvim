@@ -71,7 +71,12 @@ return {
             client.server_capabilities.documentRangeFormattingProvider = true
           end,
         },
-        denols = {},
+        denols = {
+          root_dir = function(fname)
+            local util = require 'lspconfig.util'
+            return util.root_pattern('deno.json', 'deno.jsonc')(fname)
+          end,
+        },
         emmet_language_server = {},
         eslint = {},
         html = {},
