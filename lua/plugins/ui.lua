@@ -99,7 +99,16 @@ return {
 
   {
     'j-hui/fidget.nvim',
-    config = true
+    opts = {
+      notification = {
+        view = {
+          stack_upwards = false,
+        },
+        window = {
+          align = 'top',
+        },
+      },
+    },
   },
 
   {
