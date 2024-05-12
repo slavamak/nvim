@@ -45,9 +45,37 @@ return {
     end,
   },
 
-   {
-     'numToStr/Comment.nvim',
-     event = { 'BufReadPre', 'BufNewFile' },
-     config = true,
-   },
+  {
+    'numToStr/Comment.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = true,
+  },
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      local npairs = require 'nvim-autopairs'
+      local cond = require 'nvim-autopairs.conds'
+      local Rule = require 'nvim-autopairs.rule'
+
+      npairs.setup {}
+
+      local function check_after_text(...)
+        local args = { ... }
+        return function(opts)
+          for _, str in ipairs(args) do
+            if cond.after_text(str)(opts) then return true end
+          end
+          return false
+        end
+      end
+
+      npairs.add_rules {
+        Rule('%', '%', 'liquid'):with_pair(cond.after_text '}'),
+        Rule('-', '-', 'liquid'):with_pair(check_after_text('}}', '%}')),
+        Rule(' ', ' ', 'liquid'):with_pair(check_after_text('}}', '%}', '-}}', '-%}')),
+      }
+    end,
+  },
 }

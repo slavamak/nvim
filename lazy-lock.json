@@ -21,6 +21,7 @@
   "mini.statusline": { "branch": "main", "commit": "b1a8020aead3f12885aa539a46c07b02b036ac05" },
   "neoconf.nvim": { "branch": "main", "commit": "ef304c29977b85c99382fcba821b3f710e144a74" },
   "neodev.nvim": { "branch": "main", "commit": "ce9a2e8eaba5649b553529c5498acb43a6c317cd" },
+  "nvim-autopairs": { "branch": "master", "commit": "14e97371b2aab6ee70054c1070a123dfaa3e217e" },
   "nvim-cmp": { "branch": "main", "commit": "2fb2a3cf78bbc1b0bea030e8c8728985af1cf302" },
   "nvim-lspconfig": { "branch": "master", "commit": "f4619ab31fc4676001ea05ae8200846e6e7700c7" },
   "nvim-treesitter": { "branch": "master", "commit": "1d1d92e94aea9ac0273015341438b63d2db528a5" },
