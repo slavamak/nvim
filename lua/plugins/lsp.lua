@@ -208,4 +208,14 @@ return {
       vim.api.nvim_set_hl(0, 'LspInfoBorder', { link = 'FloatBorder' })
     end,
   },
+
+  {
+    'icholy/lsplinks.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      local lsplinks = require 'lsplinks'
+      lsplinks.setup()
+      vim.keymap.set('n', 'gx', lsplinks.gx, { desc = 'Open file using LSP document links' })
+    end,
+  }
 }
