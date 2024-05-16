@@ -46,12 +46,6 @@ return {
   },
 
   {
-    'numToStr/Comment.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = true,
-  },
-
-  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()
