@@ -74,7 +74,6 @@ return {
           require('conform').format { async = true, lsp_fallback = true }
         end, { desc = 'LSP format document', buffer = bufnr })
 
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP display hover information', buffer = bufnr })
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP display signature information', buffer = bufnr })
         vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { desc = 'LSP rename all references', buffer = bufnr })
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP jump to the definition', buffer = bufnr })
@@ -86,8 +85,6 @@ return {
 
       vim.keymap.set('n', '<Leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic quickfix list' })
       vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, { desc = 'Open float diagnostic' })
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
 
       local handlers = { lsp_zero.default_setup }
       local ensure_installed = {}
