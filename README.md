@@ -2,6 +2,8 @@
 
 Constant work in progress.
 
+I've tried many different Neovim configs and IDE-like setups. But I quickly realized that I don't like all of that and want something simpler and lighter. So the idea behind my config is to keep it clean, use the minimum number of plugins, and NOT override the default key mappings.
+
 ## Prerequisites
 
 * [Neovim](https://neovim.io/doc) ≥ v0.9.0
