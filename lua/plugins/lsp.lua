@@ -139,6 +139,7 @@ return {
         },
         pylsp = {},
         ruby_ls = {},
+        shopify_theme_ls = {},
         stylelint_lsp = {
           filetypes = {
             'css',
@@ -150,14 +151,6 @@ return {
         },
         tailwindcss = {},
         taplo = {},
-        theme_check = {
-          root_dir = function(fname)
-            return util.root_pattern('.theme-check.yml', '.theme-check.yaml')(fname)
-              or util.find_package_json_ancestor(fname)
-              or util.find_node_modules_ancestor(fname)
-              or util.find_git_ancestor(fname)
-          end,
-        },
         tsserver = {
           on_new_config = function(new_config, root_dir)
             if deno_config_exists(root_dir) then new_config.enabled = false end
