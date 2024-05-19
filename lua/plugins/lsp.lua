@@ -88,10 +88,19 @@ return {
 
       local handlers = { lsp_zero.default_setup }
       local ensure_installed = {}
-
-      local schemastore = require('schemastore')
+      local schemastore = require 'schemastore'
       local util = require 'lspconfig.util'
       local deno_config_exists = util.root_pattern('deno.json', 'deno.jsonc')
+      local inlay_hints_settings = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = "literal",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = false,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+      }
 
       local servers = {
         ansiblels = {},
@@ -134,6 +143,9 @@ return {
               workspace = {
                 checkThirdParty = false,
               },
+              hint = {
+                enable = true,
+              },
             },
           },
         },
@@ -155,6 +167,14 @@ return {
           on_new_config = function(new_config, root_dir)
             if deno_config_exists(root_dir) then new_config.enabled = false end
           end,
+          settings = {
+            typescript = {
+              inlayHints = inlay_hints_settings,
+            },
+            javascript = {
+              inlayHints = inlay_hints_settings,
+            },
+          },
         },
         yamlls = {
           on_attach = function(client)
