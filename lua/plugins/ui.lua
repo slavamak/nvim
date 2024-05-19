@@ -91,6 +91,10 @@ return {
     opts = {
       default_file_explorer = false,
       delete_to_trash = true,
+      float = {
+        max_width = 100,
+        max_height = 20,
+      },
     },
     config = function(_, opts)
       require('oil').setup(opts)
