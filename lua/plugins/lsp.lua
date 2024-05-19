@@ -150,7 +150,7 @@ return {
           },
         },
         pylsp = {},
-        ruby_ls = {},
+        ruby_lsp = {},
         shopify_theme_ls = {},
         stylelint_lsp = {
           filetypes = {
