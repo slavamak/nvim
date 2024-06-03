@@ -74,7 +74,7 @@ return {
           require('conform').format { async = true, lsp_fallback = true }
         end, { desc = 'LSP format document', buffer = bufnr })
 
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP display signature information', buffer = bufnr })
+        vim.keymap.set({'i', 'n'}, '<Leader>k', vim.lsp.buf.signature_help, { desc = 'LSP display signature information', buffer = bufnr })
         vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, { desc = 'LSP rename all references', buffer = bufnr })
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP jump to the definition', buffer = bufnr })
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP jump to the declaration', buffer = bufnr })
