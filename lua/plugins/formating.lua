@@ -7,10 +7,10 @@ return {
       formatters_by_ft = {
         css = { { 'prettierd_css', 'stylelint' } },
         scss = { { 'prettierd_css', 'stylelint' } },
-        javascript = { { 'prettierd_js', 'eslint_d' } },
-        javascriptreact = { { 'prettierd_js', 'eslint_d' } },
-        typescript = { { 'prettierd_js', 'eslint_d' } },
-        typescriptreact = { { 'prettierd_js', 'eslint_d' } },
+        javascript = { 'prettierd_js' },
+        javascriptreact = { 'prettierd_js' },
+        typescript = { 'prettierd_js' },
+        typescriptreact = { 'prettierd_js' },
         liquid = { 'prettierd' },
         lua = { 'stylua' },
         bash = { 'shfmt' },
@@ -30,19 +30,6 @@ return {
       local conform_util = require 'conform.util'
       local lsp_util = require 'lspconfig.util'
       local prettierd = require 'conform.formatters.prettierd'
-
-      opts.formatters.eslint_d = {
-        cwd = conform_util.root_file(lsp_util.insert_package_json({
-          '.eslintrc.js',
-          '.eslintrc.cjs',
-          '.eslintrc.yaml',
-          '.eslintrc.yml',
-          '.eslintrc.json',
-          'eslint.config.js',
-          'eslint.config.ts',
-        }, 'eslintConfig')),
-        require_cwd = true,
-      }
 
       opts.formatters.stylelint = {
         cwd = conform_util.root_file(lsp_util.insert_package_json({
