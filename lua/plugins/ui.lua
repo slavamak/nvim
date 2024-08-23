@@ -63,25 +63,25 @@ return {
 
       telescope.setup {
         defaults = {
-          vimgrep_arguments = vimgrep_arguments
+          vimgrep_arguments = vimgrep_arguments,
         },
         extensions = {
-          ["ui-select"] = {
-            require('telescope.themes').get_dropdown {}
-          }
+          ['ui-select'] = {
+            require('telescope.themes').get_dropdown {},
+          },
         },
         pickers = {
           find_files = {
             find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
           },
           git_files = {
-            show_untracked = true
+            show_untracked = true,
           },
         },
       }
 
       telescope.load_extension 'ui-select'
-    end
+    end,
   },
 
   {
@@ -95,10 +95,14 @@ return {
         max_width = 100,
         max_height = 20,
       },
+      keymaps = {
+        ['<C-f>'] = 'actions.preview_scroll_down',
+        ['<C-b>'] = 'actions.preview_scroll_up',
+      },
     },
     config = function(_, opts)
       require('oil').setup(opts)
-    end
+    end,
   },
 
   {
@@ -110,7 +114,7 @@ return {
     'echasnovski/mini.statusline',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      'lewis6991/gitsigns.nvim'
+      'lewis6991/gitsigns.nvim',
     },
     event = 'VeryLazy',
     config = function()
@@ -127,6 +131,6 @@ return {
         group = vim.api.nvim_create_augroup('update-statusline', { clear = true }),
         pattern = 'background',
       })
-    end
-  }
+    end,
+  },
 }
