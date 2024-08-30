@@ -22,7 +22,7 @@ require('lazy').setup('plugins', {
   },
   install = {
     missing = true,
-    colorscheme = { 'kanagawa-wave', 'github_light_default' },
+    colorscheme = { 'zenwritten' },
   },
   ui = {
     border = vim.g.border_chars,

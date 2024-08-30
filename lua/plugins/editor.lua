@@ -1,22 +1,5 @@
 return {
   {
-    'f-person/auto-dark-mode.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {
-      set_dark_mode = function()
-        vim.cmd 'colorscheme kanagawa-wave'
-        vim.api.nvim_set_option_value('background', 'dark', {})
-      end,
-      set_light_mode = function()
-        vim.cmd 'colorscheme github_light_default'
-        vim.api.nvim_set_option_value('background', 'light', {})
-      end,
-      update_interval = 1000,
-    },
-  },
-
-  {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
     config = function()
@@ -46,30 +29,64 @@ return {
   },
 
   {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
+    'nvim-telescope/telescope.nvim',
+    cmd = 'Telescope',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'nvim-telescope/telescope-ui-select.nvim',
+    },
     config = function()
-      local npairs = require 'nvim-autopairs'
-      local cond = require 'nvim-autopairs.conds'
-      local Rule = require 'nvim-autopairs.rule'
+      local telescope = require 'telescope'
+      local telescope_config = require 'telescope.config'
+      local vimgrep_arguments = { unpack(telescope_config.values.vimgrep_arguments) }
 
-      npairs.setup {}
+      table.insert(vimgrep_arguments, '--hidden')
+      table.insert(vimgrep_arguments, '--glob')
+      table.insert(vimgrep_arguments, '!**/.git/*')
 
-      local function check_after_text(...)
-        local args = { ... }
-        return function(opts)
-          for _, str in ipairs(args) do
-            if cond.after_text(str)(opts) then return true end
-          end
-          return false
-        end
-      end
-
-      npairs.add_rules {
-        Rule('%', '%', 'liquid'):with_pair(cond.after_text '}'),
-        Rule('-', '-', 'liquid'):with_pair(check_after_text('}}', '%}')),
-        Rule(' ', ' ', 'liquid'):with_pair(check_after_text('}}', '%}', '-}}', '-%}')),
+      telescope.setup {
+        defaults = {
+          vimgrep_arguments = vimgrep_arguments,
+        },
+        extensions = {
+          ['ui-select'] = {
+            require('telescope.themes').get_dropdown {},
+          },
+        },
+        pickers = {
+          find_files = {
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
+          },
+          git_files = {
+            show_untracked = true,
+          },
+        },
       }
+
+      telescope.load_extension 'ui-select'
+    end,
+  },
+
+  {
+    'stevearc/oil.nvim',
+    cmd = 'Oil',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      default_file_explorer = false,
+      delete_to_trash = true,
+      float = {
+        max_width = 100,
+        max_height = 20,
+      },
+      keymaps = {
+        ['<C-f>'] = 'actions.preview_scroll_down',
+        ['<C-b>'] = 'actions.preview_scroll_up',
+      },
+    },
+    config = function(_, opts)
+      require('oil').setup(opts)
     end,
   },
 }
