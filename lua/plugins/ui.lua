@@ -6,9 +6,18 @@ return {
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'zenwritten'
-      vim.cmd 'highlight StatusLine guibg=NONE'
-      vim.cmd 'highlight! link StatuslineNC LineNR'
-      vim.cmd 'highlight! link StatuslineNR LineNR'
+
+      local function set_highlights()
+        vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'LineNR' })
+      end
+
+      set_highlights()
+
+      vim.api.nvim_create_autocmd('OptionSet', {
+        pattern = 'background',
+        callback = set_highlights,
+      })
     end,
   },
 
