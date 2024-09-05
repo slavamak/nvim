@@ -22,7 +22,7 @@ require('lazy').setup('plugins', {
   },
   install = {
     missing = true,
-    colorscheme = { 'zenwritten' },
+    colorscheme = { 'catppuccin' },
   },
   ui = {
     border = vim.g.border_chars,
