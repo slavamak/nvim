@@ -1,23 +1,11 @@
 return {
   {
-    'zenbones-theme/zenbones.nvim',
-    dependencies = 'rktjmp/lush.nvim',
-    lazy = false,
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
+    lazy = false,
     config = function()
-      vim.cmd.colorscheme 'zenwritten'
-
-      local function set_highlights()
-        vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'NONE' })
-        vim.api.nvim_set_hl(0, 'StatusLineNC', { link = 'LineNR' })
-      end
-
-      set_highlights()
-
-      vim.api.nvim_create_autocmd('OptionSet', {
-        pattern = 'background',
-        callback = set_highlights,
-      })
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
