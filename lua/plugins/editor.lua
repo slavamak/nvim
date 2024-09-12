@@ -48,6 +48,9 @@ return {
 
       telescope.setup {
         defaults = {
+          preview = {
+            treesitter = false,
+          },
           vimgrep_arguments = vimgrep_arguments,
         },
         extensions = {
@@ -88,5 +91,10 @@ return {
     config = function(_, opts)
       require('oil').setup(opts)
     end,
+  },
+
+  {
+    'pteroctopus/faster.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
   },
 }
