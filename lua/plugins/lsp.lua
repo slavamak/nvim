@@ -164,7 +164,7 @@ return {
         },
         tailwindcss = {},
         taplo = {},
-        tsserver = {
+        ts_ls = {
           on_new_config = function(new_config, root_dir)
             if deno_config_exists(root_dir) then new_config.enabled = false end
           end,
