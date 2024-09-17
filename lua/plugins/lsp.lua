@@ -92,11 +92,15 @@ return {
       local schemastore = require 'schemastore'
       local util = require 'lspconfig.util'
       local deno_config_exists = util.root_pattern('deno.json', 'deno.jsonc')
+      local format_settings = {
+        indentSize = 2,
+        semicolons = 'remove',
+      }
       local inlay_hints_settings = {
         includeInlayEnumMemberValueHints = true,
         includeInlayFunctionLikeReturnTypeHints = true,
         includeInlayFunctionParameterTypeHints = true,
-        includeInlayParameterNameHints = "literal",
+        includeInlayParameterNameHints = 'literal',
         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
         includeInlayPropertyDeclarationTypeHints = true,
         includeInlayVariableTypeHints = false,
@@ -168,11 +172,18 @@ return {
           on_new_config = function(new_config, root_dir)
             if deno_config_exists(root_dir) then new_config.enabled = false end
           end,
+          init_options = {
+            preferences = {
+              quotePreference = 'single',
+            },
+          },
           settings = {
-            typescript = {
+            javascript = {
+              format = format_settings,
               inlayHints = inlay_hints_settings,
             },
-            javascript = {
+            typescript = {
+              format = format_settings,
               inlayHints = inlay_hints_settings,
             },
           },
