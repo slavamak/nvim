@@ -1,26 +1,26 @@
 return {
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
+    'projekt0n/github-nvim-theme',
     lazy = false,
     opts = {
-      color_overrides = {
-        latte = {
-          base = '#eff1f5',
-          mantle = '#eff1f5',
-          crust = '#eff1f5',
+      groups = {
+        all = {
+          Delimiter = { link = '@punctuation.delimiter' },
+          StatusLine = { fg = 'fg3', bg = 'none' },
+          StatusLineNC = { fg = 'palette.fg.muted', bg = 'none' },
         },
-        mocha = {
-          base = '#0a0c10',
-          mantle = '#0a0c10',
-          crust = '#0a0c10',
+      },
+      specs = {
+        github_light_default = {
+          bg1 = '#f6f8fa',
         },
       },
     },
     config = function(_, opts)
-      require('catppuccin').setup(opts)
-      vim.cmd.colorscheme 'catppuccin'
+      require('github-theme').setup(opts)
+      local colorscheme = vim.o.background == 'light' and 'github_light_default'
+        or 'github_dark_default'
+      vim.cmd.colorscheme(colorscheme)
     end,
   },
 
