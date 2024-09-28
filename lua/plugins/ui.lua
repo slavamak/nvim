@@ -10,11 +10,6 @@ return {
           StatusLineNC = { fg = 'palette.fg.muted', bg = 'none' },
         },
       },
-      specs = {
-        github_light_default = {
-          bg1 = '#f6f8fa',
-        },
-      },
     },
     config = function(_, opts)
       require('github-theme').setup(opts)
