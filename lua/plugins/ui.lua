@@ -2,6 +2,7 @@ return {
   {
     'projekt0n/github-nvim-theme',
     lazy = false,
+    priority = 1000,
     opts = {
       groups = {
         all = {
@@ -13,9 +14,15 @@ return {
     },
     config = function(_, opts)
       require('github-theme').setup(opts)
-      local colorscheme = vim.o.background == 'light' and 'github_light_default'
-        or 'github_dark_default'
-      vim.cmd.colorscheme(colorscheme)
+
+      vim.api.nvim_create_autocmd('OptionSet', {
+        desc = 'Automatically update colorscheme based on background option',
+        group = vim.api.nvim_create_augroup('update-colorscheme', { clear = true }),
+        pattern = 'background',
+        callback = function()
+          vim.cmd.colorscheme('github_' .. vim.o.background .. '_default')
+        end,
+      })
     end,
   },
 
