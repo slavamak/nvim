@@ -3,6 +3,7 @@ vim.g.netrw_browse_split = 0
 vim.g.netrw_preview = 1
 vim.g.netrw_alto = 0
 vim.g.border_chars = 'rounded'
+vim.opt.colorcolumn = { '+1' }
 vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.inccommand = 'split'
@@ -20,6 +21,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.statusline = '%f %m %= %Y %p%% %l:%c'
 vim.opt.swapfile = false
+vim.opt.textwidth = 80
 vim.opt.undodir = os.getenv 'HOME' .. '/.cache/nvim/undodir'
 vim.opt.undofile = true
 vim.opt.updatetime = 300
