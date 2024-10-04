@@ -122,7 +122,9 @@ return {
         denols = {
           root_dir = deno_config_exists
         },
-        emmet_language_server = {},
+        emmet_language_server = {
+          filetypes = { 'html', 'css', 'liquid', 'javascriptreact', 'typescriptreact' },
+        },
         eslint = {},
         html = {},
         jsonls = {
