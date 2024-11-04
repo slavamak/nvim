@@ -251,9 +251,12 @@ return {
     dependencies = 'neovim/nvim-lspconfig',
     cmd = 'ConformInfo',
     opts = {
+      default_format_opts = {
+        lsp_format = 'fallback',
+      },
       formatters_by_ft = {
-        css = { { 'prettierd_css', 'stylelint' } },
-        scss = { { 'prettierd_css', 'stylelint' } },
+        css = { 'prettierd_css', 'stylelint', stop_after_first = true },
+        scss = { 'prettierd_css', 'stylelint', stop_after_first = true },
         javascript = { 'prettierd_js' },
         javascriptreact = { 'prettierd_js' },
         typescript = { 'prettierd_js' },
