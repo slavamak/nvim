@@ -31,4 +31,9 @@ return {
     lazy = false,
     config = true,
   },
+
+  {
+    'kvrohit/rasmus.nvim',
+    event = 'VeryLazy',
+  },
 }
