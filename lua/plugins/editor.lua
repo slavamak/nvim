@@ -97,4 +97,21 @@ return {
     'pteroctopus/faster.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
   },
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {
+      icons = {
+        colors = false,
+        mappings = false,
+        separator = '',
+      },
+      preset = 'helix',
+      win = {
+        border = vim.g.border_chars,
+        width = { min = 40 },
+      },
+    },
+  },
 }
