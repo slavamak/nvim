@@ -62,6 +62,7 @@ return {
       local lsp_zero = require 'lsp-zero'
       lsp_zero.extend_lspconfig()
 
+      -- stylua: ignore start
       lsp_zero.on_attach(function(_, bufnr)
         vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, { desc = 'LSP code action', buffer = bufnr })
         if vim.lsp.buf.range_code_action then
@@ -86,6 +87,7 @@ return {
 
       vim.keymap.set('n', '<Leader>q', vim.diagnostic.setqflist, { desc = 'Open diagnostic quickfix list' })
       vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, { desc = 'Open float diagnostic' })
+      -- stylua: ignore end
 
       local handlers = { lsp_zero.default_setup }
       local ensure_installed = {}
@@ -171,9 +173,7 @@ return {
         svelte = {
           capabilities = {
             workspace = {
-              didChangeWatchedFiles = {
-                dynamicRegistration = true
-              },
+              didChangeWatchedFiles = false,
             },
           },
         },
