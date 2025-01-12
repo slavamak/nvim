@@ -253,10 +253,11 @@ return {
     opts = {
       default_format_opts = {
         lsp_format = 'fallback',
+        stop_after_first = true,
       },
       formatters_by_ft = {
-        css = { 'prettierd_css', 'stylelint', stop_after_first = true },
-        scss = { 'prettierd_css', 'stylelint', stop_after_first = true },
+        css = { 'prettierd_css', 'stylelint' },
+        scss = { 'prettierd_css', 'stylelint' },
         javascript = { 'prettierd_js' },
         javascriptreact = { 'prettierd_js' },
         typescript = { 'prettierd_js' },
