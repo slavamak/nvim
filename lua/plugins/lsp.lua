@@ -168,6 +168,15 @@ return {
             'vue',
           },
         },
+        svelte = {
+          capabilities = {
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = true
+              },
+            },
+          },
+        },
         tailwindcss = {},
         taplo = {},
         ts_ls = {
