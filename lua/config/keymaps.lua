@@ -54,3 +54,5 @@ vim.keymap.set('n', '[q', '<Cmd>cprevious<Cr>', { desc = 'Previous quickfix list
 vim.keymap.set('n', ']q', '<Cmd>cnext<Cr>', { desc = 'Next quickfix list item' })
 vim.keymap.set('n', '[Q', '<Cmd>cfirst<Cr>', { desc = 'First item in quickfix list' })
 vim.keymap.set('n', ']Q', '<Cmd>clast<Cr>', { desc = 'Last item in quickfix list' })
+vim.keymap.set('n', '[r', '<Cmd>lua Snacks.words.jump(-vim.v.count1)<Cr>', { desc = 'Previous reference' })
+vim.keymap.set('n', ']r', '<Cmd>lua Snacks.words.jump(vim.v.count1)<Cr>', { desc = 'Next reference' })

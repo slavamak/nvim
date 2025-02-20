@@ -120,6 +120,9 @@ return {
       image = {},
       lazygit = {},
       notifier = {},
+      words = {
+        modes = { 'n' },
+      },
     },
   },
 }
