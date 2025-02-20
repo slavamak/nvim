@@ -94,11 +94,6 @@ return {
   },
 
   {
-    'pteroctopus/faster.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
-  },
-
-  {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     opts = {
@@ -112,6 +107,14 @@ return {
         border = vim.g.border_chars,
         width = { min = 40 },
       },
+    },
+  },
+
+  {
+    'folke/snacks.nvim',
+    ---@type snacks.Config
+    opts = {
+      bigfile = {},
     },
   },
 }
