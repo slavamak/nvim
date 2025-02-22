@@ -40,8 +40,5 @@ return {
     'slavamak/rasmus.nvim',
     lazy = false,
     priority = 1001,
-    config = function()
-      vim.g.rasmus_italic_comments = false
-    end,
   },
 }
