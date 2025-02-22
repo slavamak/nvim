@@ -20,7 +20,11 @@ return {
         group = vim.api.nvim_create_augroup('update-colorscheme', { clear = true }),
         pattern = 'background',
         callback = function()
-          vim.cmd.colorscheme('github_' .. vim.o.background .. '_default')
+          if vim.o.background == 'dark' then
+            vim.cmd.colorscheme 'rasmus'
+          else
+            vim.cmd.colorscheme 'github_light_default'
+          end
         end,
       })
     end,
@@ -33,7 +37,11 @@ return {
   },
 
   {
-    'kvrohit/rasmus.nvim',
-    event = 'VeryLazy',
+    'slavamak/rasmus.nvim',
+    lazy = false,
+    priority = 1001,
+    config = function()
+      vim.g.rasmus_italic_comments = false
+    end,
   },
 }
