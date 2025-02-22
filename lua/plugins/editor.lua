@@ -118,13 +118,6 @@ return {
     opts = {
       bigfile = {},
       image = {},
-      input = {
-        icon_pos = false,
-      },
-      lazygit = {},
-      notifier = {
-        style = 'fancy',
-      },
       words = {
         modes = { 'n' },
       },
